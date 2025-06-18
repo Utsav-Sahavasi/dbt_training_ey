@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: ecommerce_raw #A logical name for this group of raw tables
+    database: dbt_dev_db # Uses environment variable for database
+    schema: dbt_schema  # <<-- REPLACE THIS with your actual raw schema name (e.g., RAW)
+
+    tables:
+      - name: raw_customers
+        description: "Raw customer data from the CRM system"
+        columns:
+          - name: customer_id
+            description: "Unique identifier for the customer"
+            tests:
+              - unique
+              - not_null
+
+      - name: raw_orders
+        description: "Raw order transaction data"
+        columns:
+          - name: order_id
+            description: "Unique identifier for the order"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Foreign key to raw_customers"
